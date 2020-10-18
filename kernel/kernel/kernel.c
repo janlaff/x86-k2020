@@ -11,5 +11,5 @@
 #endif
 
 void kernel_main() {
-    // TODO
+    // TODO: VGA terminal driver
 }
