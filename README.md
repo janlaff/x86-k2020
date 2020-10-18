@@ -3,3 +3,15 @@
 
 ## Dependencies
 i686 gcc compiler
+nasm
+qemu
+
+## Build
+```
+$ ./build.sh
+```
+
+## Run (Debug)
+```
+$ ./qemu.sh
+```
