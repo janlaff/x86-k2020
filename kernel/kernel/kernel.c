@@ -10,10 +10,11 @@
 #error "Target of this kernel must be i386!!"
 #endif
 
-// TODO: correct kernel include paths
 #include <kernel/terminal.h>
 
 void kernel_main() {
-    /*terminal_init();
-    terminal_writestring("Booting X86-K2020 Kernel...");*/
+    terminal_init();
+    uint8_t cool_greeting_colors = terminal_create_color(TERMINAL_COLOR_GREEN, TERMINAL_COLOR_BLACK);
+    terminal_setcolor(cool_greeting_colors);
+    terminal_writestring("Welcome to the matrix...");
 }
