@@ -1,6 +1,6 @@
 CFLAGS:=$(CFLAGS) -ffreestanding -Wall -Wextra
 LDFLAGS=
-LIBS=-nostdlib -lgcc
+LIBS=-nostdlib -lgcc -lk
 
 # Fixed architecture, only i386 is supported
 ARCHDIR=arch/i386
