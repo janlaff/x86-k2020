@@ -6,6 +6,7 @@ OBJS = string/memcpy.o \
 string/strlen.o \
 string/strcmp.o \
 string/memset.o \
+string/memcmp.o \
 
 .PHONY: all clean install install-headers
 .SUFFIXES: .o .c

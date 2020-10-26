@@ -26,4 +26,8 @@ void kernel_main() {
     memset((void*)string, '-', 2);
     terminal_writestring(string);
 
+
+    const char* buffer1 = "ttt";
+    const char* buffer2 = "ttr";
+    if(!memcmp(buffer1, buffer2, 2)) terminal_writestring("first two characters are equal");
 }

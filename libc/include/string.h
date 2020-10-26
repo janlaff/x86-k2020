@@ -15,4 +15,7 @@ int strcmp(const char* str1, const char* str2);
 // sets the first n bytes of a pointer to the specified value
 void* memset(void* data, int value, size_t count);
 
+// compares the first n bytes of two memory regions and returns 0 if they are equal
+int memcmp(const void* p1, const void* p2, int size);
+
 #endif // LIBC_STRING_H
