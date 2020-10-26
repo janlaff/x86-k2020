@@ -34,9 +34,14 @@ void terminal_setentry(size_t x, size_t y, uint8_t color, unsigned char uc) {
 }
 
 void terminal_putchar(char c) {
-    terminal_setentry(terminal_column, terminal_row, terminal_color, (unsigned char)c);
-
-    if (++terminal_column == TERMINAL_WIDTH) {
+    if (c == '\n') {
+        terminal_row++;
+        terminal_column = 0;
+    }
+    else {
+        terminal_setentry(terminal_column++, terminal_row, terminal_color, (unsigned char)c);
+    }
+    if (terminal_column == TERMINAL_WIDTH) {
         terminal_column = 0;
         if (++terminal_row == TERMINAL_HEIGHT) {
             terminal_row = 0;
