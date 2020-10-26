@@ -2,10 +2,10 @@ CFLAGS:=$(CFLAGS) -ffreestanding -Wall -Wextra
 LDFLAGS=
 LIBS=-nostdlib -lgcc
 
-
-OBJS=\
-string/memcpy.o \
+OBJS = string/memcpy.o \
 string/strlen.o \
+string/strcmp.o \
+string/memset.o \
 
 .PHONY: all clean install install-headers
 .SUFFIXES: .o .c
