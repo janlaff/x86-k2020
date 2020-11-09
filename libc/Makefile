@@ -8,6 +8,8 @@ string/strcmp.o \
 string/memset.o \
 string/memcmp.o \
 stdlib/itoa.o \
+stdio/printf.o \
+stdio/putchar.o \
 
 .PHONY: all clean install install-headers
 .SUFFIXES: .o .c
