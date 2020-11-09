@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
+#include <stdlib.h>
 
 #if defined(__linux__)
 #error "You need to use a cross-compiler!!"
@@ -28,6 +29,11 @@ void kernel_main()
     const char *string = "untouched string\n";
     memset((void *)string, '-', 2);
     terminal_writestring(string);
+
+    char buf[129];
+    itoa(2848, buf, 10);
+    terminal_writestring(buf);
+    terminal_writestring("\n");
 
     const char *buffer1 = "ttt";
     const char *buffer2 = "ttr";
