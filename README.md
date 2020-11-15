@@ -17,3 +17,9 @@ $ ./build.sh
 ```
 $ ./qemu.sh
 ```
+
+## WebAssembly Runtime
+# Useful links
+(WASI Interface)[https://github.com/WebAssembly/WASI/blob/master/phases/snapshot/docs.md]
+(WASM Interpreter Reference Implementation)[https://github.com/WebAssembly/spec/tree/master/interpreter]
+(WASM3 C Interpreter)[https://github.com/wasm3/wasm3]
