@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #if defined(__linux__)
 #error "You need to use a cross-compiler!!"
@@ -39,4 +40,6 @@ void kernel_main()
     const char *buffer2 = "ttr";
     if (!memcmp(buffer1, buffer2, 2))
         terminal_writestring("first two characters are equal\n");
+
+    printf("Test Message: %s %d 0x%x\n", "Test String followed by decimal and hex number", 1337, 0x1337);
 }
