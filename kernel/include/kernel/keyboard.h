@@ -3,8 +3,8 @@
 
 // encoder commands--->0x60 / controller commands--->0x64
 
-#ifndef KEYBOARD_H
-#define KEYBOARD_H
+#ifndef KERNEL_KEYBOARD_H
+#define KERNEL_KEYBOARD_H
 
 enum KB_ENCODER_PORT
 {

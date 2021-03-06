@@ -35,11 +35,9 @@ _start:
     ; Call into the c code
     call kernel_main
 
-
-    call setup_page_tables
-    call enable_paging
-    
-    mov dword [0xB8000], 0x2F4B2F4F ; print OK
+    ;call setup_page_tables
+    ;call enable_paging
+    ;mov dword [0xB8000], 0x2F4B2F4F ; print OK
 
     ; Endless loop
     cli
