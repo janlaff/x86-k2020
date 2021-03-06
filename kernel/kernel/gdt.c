@@ -1,6 +1,5 @@
-#include "kernel/gdt.h"
-
-#include <stdio.h>
+#include <kernel/gdt.h>
+#include <stdint.h>
 #include <stddef.h>
 
 struct gdt_ptr {
@@ -18,15 +17,15 @@ struct gdt_entry {
 } __attribute__((packed));
 
 struct gdt_entry gdt[3];
-struct gdt_ptr gp;
+struct gdt_ptr gdtp;
 
 extern void gdt_flush();
 
-void gdt_set_gate(int num, uint64_t base, uint64_t limit, uint8_t access, uint8_t gran);
+void gdt_set_gate(int num, uint32_t base, uint64_t limit, uint8_t access, uint8_t gran);
 
 void gdt_init() {
-    gp.limit = (sizeof(struct gdt_entry) * 3) - 1;
-    gp.base = (uint32_t)&gdt;
+    gdtp.limit = (sizeof(struct gdt_entry) * 3) - 1;
+    gdtp.base = (uint32_t)&gdt;
 
     // NULL descriptor
     gdt_set_gate(0, 0, 0, 0, 0);
@@ -38,17 +37,17 @@ void gdt_init() {
     gdt_flush();
 }
 
-void gdt_set_gate(int num, uint64_t base, uint64_t limit, uint8_t access, uint8_t gran) {
-    /* Setup the descriptor base address */
+void gdt_set_gate(int num, uint32_t base, uint64_t limit, uint8_t access, uint8_t gran) {
+    // Setup the descriptor base address
     gdt[num].base_low = (base & 0xFFFF);
     gdt[num].base_middle = (base >> 16) & 0xFF;
     gdt[num].base_high = (base >> 24) & 0xFF;
 
-    /* Setup the descriptor limits */
+    // Setup the descriptor limits
     gdt[num].limit_low = (limit & 0xFFFF);
     gdt[num].granularity = ((limit >> 16) & 0x0F);
 
-    /* Finally, set up the granularity and access flags */
+    // Finally, set up the granularity and access flags
     gdt[num].granularity |= (gran & 0xF0);
     gdt[num].access = access;
 }
