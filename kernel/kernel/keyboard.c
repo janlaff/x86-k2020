@@ -3,29 +3,31 @@
 
 uint8_t KB_readControllerStatus()
 {
-    return inb(KYBRD_CTRL_STATS_REG);
+    // read the keyboard controller status register
+    return inb(KB_CONTROLLER_STATUS_REGISTER);
 }
 
 void KB_sendControllerCommandByte(uint8_t cmd)
 {
-    // the controller input buffer has to be empty
+    // the controller input reister has to be empty
     while (1)
-        if ((KB_readControllerStatus() & KYBRD_CTRL_STATS_MASK_IN_BUF) == 0)
+        if ((KB_readControllerStatus() & KB_CONTROLLER_STATUS_INPUT_REGISTER_MASK) == 0)
             break;
-    outb(KYBRD_CTRL_CMD_REG, cmd);
+    // send the command to the keyboard controller
+    outb(KB_CONTROLLER_COMMAND_REGISTER, cmd);
 }
 
 uint8_t KB_readEncoderBuffer()
 {
-    return inb(KYBRD_ENC_INPUT_BUF);
+    return inb(KB_ENCODER_INPUT_REGISTER);
 }
 
 void KB_writeEncoderCommandByte(uint8_t cmd)
 {
-    // the controller input buffer has to be empty
+    // the controller input register has to be empty
     while (1)
-        if ((KB_readControllerStatus() & KYBRD_CTRL_STATS_MASK_IN_BUF) == 0)
-            break;
+    if ((KB_readControllerStatus() & KB_CONTROLLER_STATUS_INPUT_REGISTER_MASK) == 0)
+        break;
     // send the command byte to the encoder
-    outb(KYBRD_ENC_CMD_REG, cmd);
+    outb(KB_ENCODER_COMMAND_REGISTER, cmd);
 }

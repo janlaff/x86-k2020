@@ -8,6 +8,6 @@ int printf(const char *format, ...);
 int putchar(int c);
 
 // get a single character from the keyboard
-extern char getchar();
+extern int getchar();
 
 #endif
