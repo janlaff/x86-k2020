@@ -7,4 +7,7 @@ int printf(const char *format, ...);
 // prints a single char on stdout
 int putchar(int c);
 
+// get a single character from the keyboard
+extern char getchar();
+
 #endif
