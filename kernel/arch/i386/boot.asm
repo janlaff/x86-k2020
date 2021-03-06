@@ -27,6 +27,8 @@ stack_top:
 section .text
 global _start:function (_start.end - _start)
 _start:
+    ; Disable interrupts
+    cli
     ; Initialize the esp register with the stack starting address
     mov esp, stack_top
 

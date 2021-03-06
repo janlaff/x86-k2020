@@ -10,6 +10,7 @@
 #include "kernel.h"
 #include <kernel/terminal.h>
 #include <kernel/keyboard.h>
+#include <kernel/gdt.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,7 +35,9 @@ uint8_t inb(uint16_t port)
 
 void kernel_main()
 {
+    gdt_init();
     terminal_init();
+
     uint8_t cool_greeting_colors = terminal_create_color(TERMINAL_COLOR_GREEN, TERMINAL_COLOR_BLACK);
     terminal_setcolor(cool_greeting_colors);
     terminal_writestring("Welcome to the matrix...\n");
