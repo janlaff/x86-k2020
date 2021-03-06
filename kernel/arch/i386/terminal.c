@@ -1,20 +1,38 @@
 #include <kernel/terminal.h>
 #include <string.h>
 
-// Fixed constants for standard vga mode
-static const size_t TERMINAL_WIDTH = 80;
-static const size_t TERMINAL_HEIGHT = 25;
-static uint16_t *const TERMINAL_MEMORY = (uint16_t *)0xB8000;
+static const uint16_t* TERMINAL_MEMORY = (uint16_t *)0xB8000;
 
 // terminal_init() must be called to initialize these values
-static size_t terminal_row;
-static size_t terminal_column;
-static uint8_t terminal_color;
+size_t terminal_row;
+size_t terminal_column;
+uint8_t terminal_color;
 static uint16_t *terminal_buffer;
+
 
 inline uint16_t create_entry(unsigned char c, uint8_t color)
 {
     return (uint16_t)c | (uint16_t)color << 8;
+}
+
+uint16_t get_entry(int x, int y)
+{
+    const size_t index = y * TERMINAL_WIDTH + x;
+    return terminal_buffer[index];
+}
+
+void terminal_remove_last_char()
+{
+    while (get_entry(terminal_column, terminal_row) & 0xF == ' ')
+    {
+        if (terminal_column == 0) // start of line reached
+        {
+            terminal_row--;
+            terminal_column = TERMINAL_WIDTH;
+        }
+        terminal_column--;
+    }
+    terminal_setentry(terminal_column + 1, terminal_row, terminal_color, 'A');
 }
 
 void terminal_init()
@@ -23,6 +41,7 @@ void terminal_init()
     terminal_column = 0;
     terminal_color = terminal_create_color(TERMINAL_COLOR_LIGHT_GREY, TERMINAL_COLOR_BLACK);
     terminal_buffer = TERMINAL_MEMORY;
+    terminal_setcolor(terminal_color);
     terminal_clear();
 }
 

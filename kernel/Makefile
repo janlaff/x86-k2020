@@ -7,7 +7,8 @@ ARCHDIR=arch/i386
 
 include $(ARCHDIR)/make.config
 
-OBJS=$(KERNEL_ARCH_OBJS) kernel/kernel.o kernel/keyboard.o kernel/gdt.o kernel/idt.o
+OBJS=$(KERNEL_ARCH_OBJS) kernel/kernel.o kernel/keyboard.o kernel/gdt.o kernel/idt.o kernel/userTerminal.o
+
 LINK_LIST=$(LDFLAGS) $(OBJS) $(LIBS)
 
 .PHONY: all clean install install-headers

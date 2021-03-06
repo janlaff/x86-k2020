@@ -4,6 +4,13 @@
 #include <stdint.h>
 #include <stddef.h>
 
+#define TERMINAL_WIDTH 80
+#define TERMINAL_HEIGHT 25
+
+extern size_t terminal_row;
+extern size_t terminal_column;
+extern uint8_t terminal_color;
+
 enum terminal_color {
 	TERMINAL_COLOR_BLACK = 0,
 	TERMINAL_COLOR_BLUE = 1,

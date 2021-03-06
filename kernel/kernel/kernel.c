@@ -8,7 +8,7 @@
 
 
 #include "kernel.h"
-#include <kernel/terminal.h>
+#include <kernel/userTerminal.h>
 #include <kernel/keyboard.h>
 #include <kernel/gdt.h>
 #include <kernel/idt.h>
@@ -39,35 +39,33 @@ void kernel_main()
     gdt_init();
     idt_init();
 
-    terminal_init();
+    UT_init();
 
-    uint8_t cool_greeting_colors = terminal_create_color(TERMINAL_COLOR_GREEN, TERMINAL_COLOR_BLACK);
-    terminal_setcolor(cool_greeting_colors);
-    terminal_writestring("Welcome to the matrix...\n");
+    UT_printLine("Welcome to the matrix...\n");
 
     if (!strcmp("tim", "tim"))
-        terminal_writestring("strings are equal\n");
+        UT_printLine("strings are equal\n");
     if (strcmp("hallo", "teststring"))
-        terminal_writestring("strings aren't equal\n");
+        UT_printLine("strings aren't equal\n");
 
     const char *string = "untouched string\n";
     memset((void *)string, '-', 2);
-    terminal_writestring(string);
+    UT_printLine(string);
 
     char buf[129];
-    itoa(2848, buf, 10);
-    terminal_writestring(buf);
-    terminal_writestring("\n");
+    itoa(129, buf, 10);
+    UT_printLine(buf);
+    UT_printLine("\n");
 
     const char *buffer1 = "ttt";
     const char *buffer2 = "ttr";
     if (!memcmp(buffer1, buffer2, 2))
-        terminal_writestring("first two characters are equal\n");
+        UT_printLine("first two characters are equal\n");
 
-    printf("Test Message: %s %d 0x%x\n", "Test String followed by decimal and hex number", 1337, 0x1337);
 
     while (true) {
-        char c = getchar();
-        terminal_putchar(c);
+        int key = getchar();
+        UT_handleUserInput(key);
     }
+
 }
