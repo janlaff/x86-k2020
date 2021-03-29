@@ -1,5 +1,5 @@
-#include "kernel.h"
-#include "kernel/keyboard.h"
+#include <kernel/io.h>
+#include <kernel/keyboard.h>
 
 uint8_t KB_readControllerStatus()
 {
