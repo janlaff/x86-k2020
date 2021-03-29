@@ -7,7 +7,7 @@ ARCHDIR=arch/i386
 
 include $(ARCHDIR)/make.config
 
-OBJS=$(KERNEL_ARCH_OBJS) kernel/kernel.o kernel/keyboard.o kernel/gdt.o kernel/idt.o kernel/userTerminal.o
+OBJS=$(KERNEL_ARCH_OBJS) kernel/kernel.o kernel/keyboard.o kernel/gdt.o kernel/idt.o kernel/userTerminal.o kernel/paging.o
 
 LINK_LIST=$(LDFLAGS) $(OBJS) $(LIBS)
 

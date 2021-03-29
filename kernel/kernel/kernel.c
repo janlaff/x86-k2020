@@ -12,6 +12,7 @@
 #include <kernel/keyboard.h>
 #include <kernel/gdt.h>
 #include <kernel/idt.h>
+#include <kernel/paging.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -38,6 +39,7 @@ void kernel_main()
 {
     gdt_init();
     idt_init();
+    paging_init();
 
     UT_init();
 
