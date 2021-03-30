@@ -9,7 +9,7 @@ static int currentInputCharCount;
 static char outputBuffer[NUM_LINES][TERMINAL_WIDTH] = {0};
 static char inputBuffer[TERMINAL_WIDTH] = {0};
 
-static const char* TERMINAL_PREFIX = "kernel > ";
+static const char* TERMINAL_PREFIX = "x86-k2020:$ ";
 
 
 void UT_init()
@@ -20,6 +20,7 @@ void UT_init()
     currentInputCharCount = 0;
     UT_clearInputBuffer();
     UT_clearOutputBuffer();
+    UT_updateCursor();
 }
 
 void UT_handleUserInput(int key)
@@ -36,6 +37,8 @@ void UT_handleUserInput(int key)
             UT_appendInputChar(key);
             break;
     }
+
+    UT_updateCursor();
 }
 
 // user input field (editable by user - last line)
@@ -124,4 +127,8 @@ void UT_printLine(const char *str)
         memcpy(outputBuffer[currentLineIndex++], str, TERMINAL_WIDTH);
     }
     UT_updateTerminalBuffer();
+}
+
+void UT_updateCursor() {
+    terminal_move_cursor(strlen(TERMINAL_PREFIX) + currentInputCharCount, TERMINAL_HEIGHT - 1);
 }

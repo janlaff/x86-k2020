@@ -10,6 +10,7 @@ void UT_clearOutputBuffer();
 void UT_updateTerminalBuffer();
 void UT_removeInputCharacter();
 void UT_applyInputString();
+void UT_updateCursor();
 
 void UT_printLine(const char *str);
 
