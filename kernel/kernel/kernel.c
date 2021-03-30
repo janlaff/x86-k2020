@@ -22,20 +22,21 @@
 
 void kernel_main()
 {
-    UT_init();
+    terminal_init();
 
-    UT_printLine("Initializing GDT Table...\n");
+    printf("Initializing GDT Table...\n");
     gdt_init();
-    UT_printLine("Initializing IDT Table...\n");
+    printf("Initializing IDT Table...\n");
     idt_init();
-    UT_printLine("Enabling paging...\n");
+    printf("Enabling paging...\n");
     paging_init();
+    printf("Starting shell...\n");
 
-    UT_printLine("System finished booting up.");
+    
+    UT_init();
 
     while (true) {
         int key = getchar();
         UT_handleUserInput(key);
     }
-
 }

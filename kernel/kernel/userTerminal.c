@@ -20,6 +20,8 @@ void UT_init()
     currentInputCharCount = 0;
     UT_clearInputBuffer();
     UT_clearOutputBuffer();
+    UT_printLine("Welcome to x86-k2020 OS!\n");
+    UT_printLine("Start by typing commands below.\n");
     UT_updateCursor();
 }
 
