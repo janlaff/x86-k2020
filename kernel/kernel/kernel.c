@@ -32,8 +32,12 @@ void kernel_main()
     paging_init();
     printf("Starting shell...\n");
 
-    KB_initialize();
     UT_init();
+
+    if (KB_initialize() != 0)
+    {
+        printf("Keyboard controller initialization suceeded\n");
+    }
 
     while (true) {
         int key = getchar();

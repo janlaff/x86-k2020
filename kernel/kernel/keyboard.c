@@ -11,7 +11,7 @@ void KB_waitWrite()
     }
 }
 
-void KB_initialize()
+int KB_initialize()
 {
     // we dont need the mouse
     KB_sendControllerCommandByte(KB_CONTROLLER_CMD_MOUSE_DISABLE);
@@ -22,7 +22,11 @@ void KB_initialize()
 
     // perform controller self test
     KB_sendControllerCommandByte(KB_CONTROLLER_CMD_SELF_TEST);
-    
+    int response = KB_readEncoderBuffer();
+    if (response == 0x55) { // self test successful
+        return 1;
+    }
+    return 0;
 }
 
 uint8_t KB_readControllerStatus()

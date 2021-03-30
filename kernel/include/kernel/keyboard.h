@@ -7,6 +7,7 @@
 #ifndef KERNEL_KEYBOARD_H
 #define KERNEL_KEYBOARD_H
 
+int KB_initialize();
 uint8_t KB_readControllerStatus();
 void KB_sendControllerCommandByte(uint8_t cmd);
 uint8_t KB_readEncoderBuffer();
