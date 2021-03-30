@@ -6,7 +6,18 @@ void KB_waitWrite()
     int timeout = 10000;
     while (1)
     {
-        if (timeout-- && (KB_readControllerStatus() & KB_CONTROLLER_STATUS_INPUT_REGISTER_MASK) == 0)
+        if (timeout-- < 0 || (KB_readControllerStatus() & KB_CONTROLLER_STATUS_INPUT_REGISTER_MASK) == 0)
+            break;
+    }
+}
+
+void KB_waitRead()
+{
+    // the output buffer bit in the status must be set in order read data
+    int timeout = 10000;
+    while (1)
+    {
+        if (timeout-- < 0 || (KB_readControllerStatus() & KB_CONTROLLER_STATUS_OUTPUT_REGISTER_MASK) == 1)
             break;
     }
 }
@@ -22,11 +33,9 @@ int KB_initialize()
 
     // perform controller self test
     KB_sendControllerCommandByte(KB_CONTROLLER_CMD_SELF_TEST);
+    KB_waitRead();
     int response = KB_readEncoderBuffer();
-    if (response == 0x55) { // self test successful
-        return 1;
-    }
-    return 0;
+    return response == 0x55; // self test successful
 }
 
 uint8_t KB_readControllerStatus()

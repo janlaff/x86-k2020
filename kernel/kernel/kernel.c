@@ -32,9 +32,12 @@ void kernel_main()
     paging_init();
     terminal_writestring("Starting shell...\n");
     if (KB_initialize() != 0)
-    {
         terminal_writestring("Keyboard controller initialization suceeded\n");
+    else {
+        terminal_writestring("Keyboard controller initialization failed\n");
+        return;
     }
+    
 
     UT_init();
 
