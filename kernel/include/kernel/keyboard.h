@@ -1,3 +1,4 @@
+#include <kernel/io.h>
 // Reference:
 // https://github.com/Neetx/osdevTraining/blob/master/codes.h
 
@@ -5,6 +6,11 @@
 
 #ifndef KERNEL_KEYBOARD_H
 #define KERNEL_KEYBOARD_H
+
+uint8_t KB_readControllerStatus();
+void KB_sendControllerCommandByte(uint8_t cmd);
+uint8_t KB_readEncoderBuffer();
+void KB_writeEncoderCommandByte(uint8_t cmd);
 
 enum KB_ENCODER_PORT
 {
@@ -59,7 +65,7 @@ enum KB_CONTROLLER_COMMANDS
     KB_CONTROLLER_CMD_WRITE = 0x60,
     KB_CONTROLLER_CMD_SELF_TEST = 0xAA,
     KB_CONTROLLER_CMD_INTERFACE_TEST = 0xAB,
-    KB_CONTROLLER_CMD_DISABLE = 0xAD,
+    KB_CONTROLLER_CMD_DISABLE_DEVICES = 0xAD,
     KB_CONTROLLER_CMD_ENABLE = 0xAE,
     KB_CONTROLLER_CMD_READ_IN_PORT = 0xC0,
     KB_CONTROLLER_CMD_READ_OUT_PORT = 0xD0,

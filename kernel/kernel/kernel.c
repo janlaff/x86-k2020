@@ -26,6 +26,7 @@ void kernel_main()
     idt_init();
     paging_init();
 
+    KB_initialize();
     UT_init();
 
     UT_printLine("Welcome to the matrix...\n");
