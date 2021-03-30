@@ -22,20 +22,21 @@
 
 void kernel_main()
 {
-    UT_init();
+    terminal_init();
 
-    printf("Initializing GDT Table...\n");
+    terminal_writestring("Initializing GDT Table...\n");
     gdt_init();
-    printf("Initializing IDT Table...\n");
+    terminal_writestring("Initializing IDT Table...\n");
     idt_init();
-    printf("Enabling paging...\n");
+    terminal_writestring("Enabling paging...\n");
     paging_init();
-    printf("Starting shell...\n");
-
+    terminal_writestring("Starting shell...\n");
     if (KB_initialize() != 0)
     {
-        printf("Keyboard controller initialization suceeded\n");
+        terminal_writestring("Keyboard controller initialization suceeded\n");
     }
+
+    UT_init();
 
     while (true) {
         int key = getchar();
