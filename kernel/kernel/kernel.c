@@ -22,7 +22,7 @@
 
 void kernel_main()
 {
-    terminal_init();
+    UT_init();
 
     printf("Initializing GDT Table...\n");
     gdt_init();
@@ -31,8 +31,6 @@ void kernel_main()
     printf("Enabling paging...\n");
     paging_init();
     printf("Starting shell...\n");
-
-    UT_init();
 
     if (KB_initialize() != 0)
     {

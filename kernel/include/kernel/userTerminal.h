@@ -13,5 +13,6 @@ void UT_applyInputString();
 void UT_updateCursor();
 
 void UT_printLine(const char *str);
+void UT_putchar(char c);
 
 #endif

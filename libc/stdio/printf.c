@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-#include <kernel/userTerminal.h>
-
 static int print(const char *data, size_t length)
 {
     const unsigned char *bytes = (const unsigned char *)data;

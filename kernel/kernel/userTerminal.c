@@ -5,6 +5,7 @@
 #define NUM_LINES TERMINAL_HEIGHT - 2
 
 static int currentLineIndex;
+static int currentOutbutBufferLineCharIndex = 0;
 static int currentInputCharCount;
 static char outputBuffer[NUM_LINES][TERMINAL_WIDTH] = {0};
 static char inputBuffer[TERMINAL_WIDTH] = {0};
@@ -20,8 +21,8 @@ void UT_init()
     currentInputCharCount = 0;
     UT_clearInputBuffer();
     UT_clearOutputBuffer();
-    UT_printLine("Welcome to x86-k2020 OS!\n");
-    UT_printLine("Start by typing commands below.\n");
+    UT_printLine("Welcome to x86-k2020 OS!");
+    UT_printLine("Start by typing commands below.");
     UT_updateCursor();
 }
 
@@ -114,19 +115,40 @@ void UT_applyInputString()
     UT_updateTerminalBuffer();
 }
 
+void UT_putchar(char c)
+{
+    if (c == '\n')
+    {
+        currentLineIndex++;
+        currentOutbutBufferLineCharIndex = 0;
+    }
+    if (currentOutbutBufferLineCharIndex < TERMINAL_WIDTH - 1) {
+        outputBuffer[currentLineIndex][currentOutbutBufferLineCharIndex++] = c;
+    }
+    else {
+        currentOutbutBufferLineCharIndex = 0;
+        outputBuffer[++currentLineIndex][0] = c;
+    }
+    UT_updateTerminalBuffer();
+}
+
 void UT_printLine(const char *str)
 {
-    if(currentLineIndex >= NUM_LINES - 1)
+    if (currentLineIndex >= NUM_LINES - 1)
     {
         for (int i = 0; i < NUM_LINES - 1; i++)
         {
             memcpy(outputBuffer[i], outputBuffer[i + 1], TERMINAL_WIDTH);
         }
         memcpy(outputBuffer[NUM_LINES - 1], str, TERMINAL_WIDTH);
-    } 
-    else 
+    }
+    else
     {
-        memcpy(outputBuffer[currentLineIndex++], str, TERMINAL_WIDTH);
+        for (int i = 0; i < strlen(str); i++)
+        {
+            UT_putchar(str[i]);
+        }
+        UT_putchar('\n');
     }
     UT_updateTerminalBuffer();
 }
