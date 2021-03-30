@@ -22,8 +22,10 @@ void KB_waitRead()
     }
 }
 
+// ref: https://www.avrfreaks.net/sites/default/files/PS2%20Keyboard.pdf
 int KB_initialize()
 {
+    int result = 1;
     // we dont need the mouse
     KB_sendControllerCommandByte(KB_CONTROLLER_CMD_MOUSE_DISABLE);
     KB_waitWrite();
@@ -35,7 +37,15 @@ int KB_initialize()
     KB_sendControllerCommandByte(KB_CONTROLLER_CMD_SELF_TEST);
     KB_waitRead();
     int response = KB_readEncoderBuffer();
-    return response == 0x55; // self test successful
+    result &= response == 0x55; // self test successful
+  
+    // perform interface self test
+    KB_sendControllerCommandByte(KB_CONTROLLER_CMD_INTERFACE_TEST);
+    KB_waitRead();
+    response = KB_readEncoderBuffer();
+    result &= response == 0; // self test successful
+
+    return result;
 }
 
 uint8_t KB_readControllerStatus()
