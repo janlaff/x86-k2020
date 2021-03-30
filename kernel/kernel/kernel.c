@@ -22,33 +22,16 @@
 
 void kernel_main()
 {
-    gdt_init();
-    idt_init();
-    paging_init();
-
     UT_init();
 
-    UT_printLine("Welcome to the matrix...\n");
+    UT_printLine("Initializing GDT Table...\n");
+    gdt_init();
+    UT_printLine("Initializing IDT Table...\n");
+    idt_init();
+    UT_printLine("Enabling paging...\n");
+    paging_init();
 
-    if (!strcmp("tim", "tim"))
-        UT_printLine("strings are equal\n");
-    if (strcmp("hallo", "teststring"))
-        UT_printLine("strings aren't equal\n");
-
-    const char *string = "untouched string\n";
-    memset((void *)string, '-', 2);
-    UT_printLine(string);
-
-    char buf[129];
-    itoa(129, buf, 10);
-    UT_printLine(buf);
-    UT_printLine("\n");
-
-    const char *buffer1 = "ttt";
-    const char *buffer2 = "ttr";
-    if (!memcmp(buffer1, buffer2, 2))
-        UT_printLine("first two characters are equal\n");
-
+    UT_printLine("System finished booting up.");
 
     while (true) {
         int key = getchar();
