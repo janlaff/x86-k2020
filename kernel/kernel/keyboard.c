@@ -1,5 +1,29 @@
-#include <kernel/io.h>
 #include <kernel/keyboard.h>
+
+void KB_waitWrite()
+{
+    // the input buffer bit in the status must be zero in order to send commands to the controller
+    int timeout = 10000;
+    while (1)
+    {
+        if (timeout-- && (KB_readControllerStatus() & KB_CONTROLLER_STATUS_INPUT_REGISTER_MASK) == 0)
+            break;
+    }
+}
+
+void KB_initialize()
+{
+    // we dont need the mouse
+    KB_sendControllerCommandByte(KB_CONTROLLER_CMD_MOUSE_DISABLE);
+    KB_waitWrite();
+
+    // flush the output buffer
+    KB_readEncoderBuffer();
+
+    // perform controller self test
+    KB_sendControllerCommandByte(KB_CONTROLLER_CMD_SELF_TEST);
+    
+}
 
 uint8_t KB_readControllerStatus()
 {

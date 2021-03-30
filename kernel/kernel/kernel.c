@@ -32,7 +32,7 @@ void kernel_main()
     paging_init();
     printf("Starting shell...\n");
 
-    
+    KB_initialize();
     UT_init();
 
     while (true) {
