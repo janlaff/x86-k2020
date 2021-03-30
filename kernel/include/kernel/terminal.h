@@ -37,6 +37,7 @@ void terminal_putchar(char c);
 void terminal_write(const char* data, size_t size);
 void terminal_writestring(const char* data);
 void terminal_clear();
+void terminal_move_cursor(size_t x, size_t y);
 uint8_t terminal_create_color(enum terminal_color fg, enum terminal_color bg);
 
 #endif // KERNEL_TERMINAL_H

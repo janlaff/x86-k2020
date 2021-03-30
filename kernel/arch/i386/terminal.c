@@ -102,6 +102,15 @@ void terminal_clear()
     }
 }
 
+void terminal_move_cursor(size_t x, size_t y) {
+    uint16_t pos = y * TERMINAL_WIDTH + x;
+
+    outb(0x3D4, 0x0F);
+    outb(0x3D5, (uint8_t)(pos & 0xFF));
+    outb(0x3D4, 0x0E);
+    outb(0x3D5, (uint8_t)((pos >> 8) & 0xFF));
+}
+
 uint8_t terminal_create_color(enum terminal_color fg, enum terminal_color bg)
 {
     return fg | bg << 4;
