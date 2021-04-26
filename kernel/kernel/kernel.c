@@ -12,6 +12,7 @@
 #include <kernel/idt.h>
 #include <kernel/paging.h>
 #include <kernel/io.h>
+#include <kernel/commandInterpreter.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,6 +20,8 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+
+int kernelActive = true;
 
 void kernel_main()
 {
@@ -41,7 +44,7 @@ void kernel_main()
 
     UT_init();
 
-    while (true) {
+    while (kernelActive) {
         int key = getchar();
         UT_handleUserInput(key);
     }

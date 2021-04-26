@@ -25,6 +25,7 @@ stack_bottom:
 stack_top:
 
 section .text
+global kernelActive
 global _start:function (_start.end - _start)
 _start:
     ; Disable interrupts
@@ -40,6 +41,6 @@ _start:
     ; Endless loop
     cli
 .hang:
-    hlt
+    
     jmp .hang
 .end:
