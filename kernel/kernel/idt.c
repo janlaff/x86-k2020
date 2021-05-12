@@ -30,6 +30,7 @@ void idt_init() {
 
     // TODO: add interrupt handlers
     // idt_set_gate ...
+    // TODO: default return for interrupts
 
     idt_flush();
 }
