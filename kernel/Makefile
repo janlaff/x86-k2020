@@ -6,8 +6,7 @@ LIBS=-nostdlib -lgcc -lk
 ARCHDIR=arch/i386
 
 include $(ARCHDIR)/make.config
-
-OBJS=$(KERNEL_ARCH_OBJS) kernel/kernel.o kernel/keyboard.o kernel/gdt.o kernel/idt.o kernel/userTerminal.o kernel/paging.o kernel/io.o kernel/ata.c
+OBJS=$(KERNEL_ARCH_OBJS) kernel/kernel.o kernel/keyboard.o kernel/gdt.o kernel/idt.o kernel/userTerminal.o kernel/paging.o kernel/io.o kernel/commandInterpreter.o
 LINK_LIST=$(LDFLAGS) $(OBJS) $(LIBS)
 
 .PHONY: all clean install install-headers

@@ -1,5 +1,6 @@
 #include <kernel/userTerminal.h>
 #include <kernel/terminal.h>
+#include <kernel/commandInterpreter.h>
 #include <string.h>
 
 #define NUM_LINES TERMINAL_HEIGHT - 2
@@ -22,7 +23,7 @@ void UT_init()
     UT_clearInputBuffer();
     UT_clearOutputBuffer();
     UT_printLine("Welcome to x86-k2020 OS!");
-    UT_printLine("Start by typing commands below.");
+    UT_printLine("Start by typing commands below. Type 'help' for a list of available commands.");
     UT_updateCursor();
 }
 
@@ -111,8 +112,9 @@ void UT_removeInputCharacter()
 void UT_applyInputString()
 {
     UT_printLine(inputBuffer);
+    CI_executeCommand(CI_getCommand(inputBuffer));
+
     UT_clearInputBuffer();
-    UT_updateTerminalBuffer();
 }
 
 void UT_putchar(char c)
@@ -122,7 +124,7 @@ void UT_putchar(char c)
         currentLineIndex++;
         currentOutbutBufferLineCharIndex = 0;
     }
-    if (currentOutbutBufferLineCharIndex < TERMINAL_WIDTH - 1) {
+    else if (currentOutbutBufferLineCharIndex < TERMINAL_WIDTH - 1) {
         outputBuffer[currentLineIndex][currentOutbutBufferLineCharIndex++] = c;
     }
     else {
@@ -150,6 +152,13 @@ void UT_printLine(const char *str)
         }
         UT_putchar('\n');
     }
+    UT_updateTerminalBuffer();
+}
+
+void UT_clearTerminal()
+{
+    UT_clearInputBuffer();
+    UT_clearOutputBuffer();
     UT_updateTerminalBuffer();
 }
 
