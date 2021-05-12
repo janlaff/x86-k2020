@@ -15,11 +15,6 @@ align 4
 
 ; The kernel stack (16 KiB) is allocated in this section
 section .bss
-align 4096      ; page size 4KB
-page_directory:
-    resb 4096
-page_table:
-    resb 4096
 stack_bottom:
     resb 16386
 stack_top:
