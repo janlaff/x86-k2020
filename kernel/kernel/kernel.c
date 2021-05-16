@@ -40,9 +40,13 @@ void kernel_main()
         terminal_writestring("Keyboard controller initialization failed\n");
         return;
     }
-    
 
     UT_init();
+
+    // Doesnt work
+    /*__asm__ volatile("sti");
+    __asm__ volatile("mov 10, %ax");
+    __asm__ volatile("divb 0");*/
 
     while (kernelActive) {
         int key = getchar();
