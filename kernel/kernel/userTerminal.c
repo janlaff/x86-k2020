@@ -13,17 +13,21 @@ static char inputBuffer[TERMINAL_WIDTH] = {0};
 
 static const char* TERMINAL_PREFIX = "x86-k2020:$ ";
 
+void UT_clearBuffer(char *buffer)
+{
+    for (int i = 0; i < strlen(buffer); i++)
+    {
+        buffer[i] = ' ';
+    }
+}
 
 void UT_init()
 {
     terminal_init();
-
-    currentLineIndex = 0;
-    currentInputCharCount = 0;
-    UT_clearInputBuffer();
-    UT_clearOutputBuffer();
-    UT_printLine("Welcome to x86-k2020 OS!");
-    UT_printLine("Start by typing commands below. Type 'help' for a list of available commands.");
+    terminal_clear();
+    UT_clearTerminal();
+    printf("Welcome to x86-k2020 OS!\n");
+    printf("Start by typing commands below. Type 'help' for a list of available commands.\n");
     UT_updateCursor();
 }
 
@@ -111,52 +115,51 @@ void UT_removeInputCharacter()
 
 void UT_applyInputString()
 {
-    UT_printLine(inputBuffer);
+    printf("%s\n", inputBuffer);
     CI_executeCommand(CI_getCommand(inputBuffer));
 
     UT_clearInputBuffer();
+    UT_updateTerminalBuffer();
+}
+
+void UT_newLineAtBottom()
+{
+    if (currentLineIndex >= NUM_LINES - 1) {
+        for (int i = 0; i < NUM_LINES - 1; i++)
+        {
+           memcpy(outputBuffer[i], outputBuffer[i + 1], TERMINAL_WIDTH);
+        }
+        currentLineIndex = NUM_LINES - 1;
+
+    }
+    else {
+        currentLineIndex++;
+    }
+    currentOutbutBufferLineCharIndex = 0;
+    UT_clearBuffer(outputBuffer[currentLineIndex]);
+    UT_updateTerminalBuffer();
 }
 
 void UT_putchar(char c)
 {
     if (c == '\n')
     {
-        currentLineIndex++;
-        currentOutbutBufferLineCharIndex = 0;
+        UT_newLineAtBottom();
     }
     else if (currentOutbutBufferLineCharIndex < TERMINAL_WIDTH - 1) {
         outputBuffer[currentLineIndex][currentOutbutBufferLineCharIndex++] = c;
     }
     else {
-        currentOutbutBufferLineCharIndex = 0;
-        outputBuffer[++currentLineIndex][0] = c;
-    }
-    UT_updateTerminalBuffer();
-}
-
-void UT_printLine(const char *str)
-{
-    if (currentLineIndex >= NUM_LINES - 1)
-    {
-        for (int i = 0; i < NUM_LINES - 1; i++)
-        {
-            memcpy(outputBuffer[i], outputBuffer[i + 1], TERMINAL_WIDTH);
-        }
-        memcpy(outputBuffer[NUM_LINES - 1], str, TERMINAL_WIDTH);
-    }
-    else
-    {
-        for (int i = 0; i < strlen(str); i++)
-        {
-            UT_putchar(str[i]);
-        }
-        UT_putchar('\n');
+        UT_newLineAtBottom();
+        outputBuffer[currentLineIndex][currentOutbutBufferLineCharIndex++] = c;
     }
     UT_updateTerminalBuffer();
 }
 
 void UT_clearTerminal()
 {
+    currentInputCharCount = 0;
+    currentLineIndex = 0;
     UT_clearInputBuffer();
     UT_clearOutputBuffer();
     UT_updateTerminalBuffer();
