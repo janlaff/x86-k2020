@@ -23,6 +23,8 @@ enum CommandType CI_getCommand(const char *command)
     return C_UNKNOWN;
 }
 
+extern int kernelActive;
+
 void CI_executeCommand(enum CommandType command)
 {
     switch (command) {
@@ -36,7 +38,8 @@ void CI_executeCommand(enum CommandType command)
         printf("shutdown: Shuts down the kernel\n");
         break;
     case C_SHUTDOWN:
-
+        kernelActive = 0;
+        printf("Shutting down Kernel... You may close the emulator now.\n");
         break;
     case C_CLEAR:
         UT_clearTerminal();
